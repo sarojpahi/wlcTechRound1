@@ -16,9 +16,11 @@ async function getToken() {
   let authParams = { scopes: ["OneDrive.ReadWrite"] };
 
   try {
+    // see if we have already the idtoken saved
     const resp = await app.acquireTokenSilent(authParams);
     accessToken = resp.accessToken;
   } catch (e) {
+    // per examples we fall back to popup
     const resp = await app.loginPopup(authParams);
     app.setActiveAccount(resp.account);
 
